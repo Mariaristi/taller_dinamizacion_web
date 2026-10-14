@@ -1,3 +1,81 @@
+
+/* Estilos para la clase liked (botón presionado) */
+.btn-like.liked {
+    background-color: #fed7d7 !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(255, 100, 100, 0.3);
+}
+
+.btn-like:hover {
+    background-color: #feb2b2;
+    cursor: pointer;
+}
+
+.btn-like {
+    transition: all 0.3s ease;
+}
+
+/* Estilos para Modo Oscuro */
+body.dark-mode {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+body.dark-mode .header {
+    background-color: #16213e;
+}
+
+body.dark-mode .main-container {
+    background-color: #1a1a2e;
+}
+
+body.dark-mode section.section {
+    background-color: #16213e;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3 {
+    color: #f0f0f0;
+}
+
+body.dark-mode p {
+    color: #ccc;
+}
+
+body.dark-mode .card {
+    background-color: #2a2a4e;
+    border: 1px solid #3a3a5e;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #e94560;
+    color: white;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #f0f0f0;
+    color: #1a1a2e;
+}
+
+body.dark-mode .form-group label {
+    color: #f0f0f0;
+}
+
+body.dark-mode input, 
+body.dark-mode select, 
+body.dark-mode textarea {
+    background-color: #3a3a5e;
+    border-color: #4a4a6e;
+    color: #f0f0f0;
+}
+
+body.dark-mode .comments-list p.empty-msg {
+    color: #ccc;
+}
 * {
   margin: 0;
   padding: 0;
