@@ -1,67 +1,86 @@
-const likeButtons = document.querySelectorAll('.btn-like');
-
-if (likeButtons.length > 0) {
-    likeButtons.forEach(button => {
-        const likeCountElement = button.querySelector('.like-count');
-        
-        // Función para actualizar el contador visualmente
-        const updateLikeCount = (count) => {
-            likeCountElement.textContent = count;
-            // Resaltar el botón cuando recibe un like
-            button.classList.add('liked');
-            setTimeout(() => button.classList.remove('liked'), 300);
-        };
-
-        // Función para manejar el clic en like
-        const handleLikeClick = () => {
-            let currentCount = parseInt(likeCountElement.textContent) || 0;
-            
-            // Alternar estado de like (activar/desactivar)
-            if (currentCount === 0) {
-                currentCount++;
-                button.classList.add('liked');
-            } else {
-                currentCount--;
-                button.classList.remove('liked');
-            }
-            
-            updateLikeCount(currentCount);
-            
-            // Emitir efecto de confeti al dar like (si la librería está cargada)
-            if (typeof canvasConfetti !== 'undefined') {
-                setTimeout(() => canvasConfetti({
-                    particleCount: 30,
-                    spread: 45,
-                    origin: { 
-                        x: button.getBoundingClientRect().left + button.offsetWidth / 2 - window.innerWidth / 2,
-                        y: button.getBoundingClientRect().top + button.offsetHeight / 2 - window.innerHeight / 2
-                    }
-                }), 100);
-            }
-        };
-
-        // Agregar evento de clic al botón like
-        button.addEventListener('click', handleLikeClick);
-    });
-}
-
-// Función de cambio de tema (Modo Claro / Modo Oscuro)
 const btnTheme = document.getElementById('btnTheme');
 
-if (btnTheme) {
-    // Estilos CSS para el modo oscuro (inludidos en styles.css o inline)
-    
-    // Alternar clase dark-mode en el body y actualizar texto del botón
-    btnTheme.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        
-        // Actualizar texto del botón dinámicamente
-        btnTheme.textContent = isDarkMode ? 'Modo Claro' : 'Modo Oscuro';
-    });
+const getPreferredTheme = () => {
+    try {
+        const savedTheme = localStorage.getItem('theme');
 
-    // Verificar si ya está en modo oscuro al cargar la página
-    if (document.body.classList.contains('dark-mode')) {
-        btnTheme.textContent = 'Modo Claro';
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+            return savedTheme;
+        }
+    } catch {
+        // localStorage puede no estar disponible.
     }
-}
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+};
+
+const setTheme = (theme) => {
+    document.body.classList.toggle('dark-mode', theme === 'dark');
+
+    if (btnTheme) {
+        btnTheme.textContent = theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro';
+    }
+
+    try {
+        localStorage.setItem('theme', theme);
+    } catch {
+        
+    }
+};
+
+let userSelectedTheme = false;
+setTheme(getPreferredTheme());
+
+btnTheme?.addEventListener('click', () => {
+    const currentTheme = document.body.classList.contains('dark-mode')
+        ? 'dark'
+        : 'light';
+
+    userSelectedTheme = true;
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+colorScheme.addEventListener('change', (event) => {
+    if (!userSelectedTheme) {
+        setTheme(event.matches ? 'dark' : 'light');
+    }
+});
+
+document.querySelectorAll('.btn-like').forEach((button) => {
+    const likeCountElement = button.querySelector('.like-count');
+
+    if (!likeCountElement) return;
+
+    button.addEventListener('click', () => {
+        const currentCount = parseInt(likeCountElement.textContent, 10) || 0;
+        const newCount = currentCount === 0 ? 1 : 0;
+
+        likeCountElement.textContent = newCount;
+        button.classList.toggle('liked', newCount > 0);
+
+        if (newCount > 0 && typeof canvasConfetti === 'function') {
+            const rect = button.getBoundingClientRect();
+
+            canvasConfetti({
+                particleCount: 30,
+                spread: 45,
+                origin: {
+                    x: (rect.left + rect.width / 2) / window.innerWidth,
+                    y: (rect.top + rect.height / 2) / window.innerHeight
+                }
+            }); 
+        }
+    });
+});
+
+const formFeedback = document.getElementById('formFeedback');
+
+formFeedback?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Implementar logica del form aquí
+});
