@@ -96,14 +96,11 @@ if (autor.length < 3 || proyecto === '' || comentario.length < 5) {
     return;
 }
 
-// 1. Crear el nodo
 const nuevoComentario = document.createElement('div');
 
-// 2. Asignar propiedades
 nuevoComentario.textContent = autor + ' - ' + proyecto + ': ' + comentario;
 nuevoComentario.classList.add('comment-card');
 
-// 3. Insertar en el DOM
 const contenedor = document.getElementById('comentariosContainer');
 contenedor.appendChild(nuevoComentario);
 
