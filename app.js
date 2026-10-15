@@ -26,7 +26,7 @@ const setTheme = (theme) => {
     try {
         localStorage.setItem('theme', theme);
     } catch {
-        
+
     }
 };
 
@@ -72,7 +72,7 @@ document.querySelectorAll('.btn-like').forEach((button) => {
                     x: (rect.left + rect.width / 2) / window.innerWidth,
                     y: (rect.top + rect.height / 2) / window.innerHeight
                 }
-            }); 
+            });
         }
     });
 });
@@ -81,6 +81,42 @@ const formFeedback = document.getElementById('formFeedback');
 
 formFeedback?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const autor = document.getElementById('autor').value.trim();
+    const proyecto = document.getElementById('proyecto').value;
+    const comentario = document.getElementById('comentario').value.trim();
 
-    // Implementar logica del form aquí
+    if (autor.length < 3 || proyecto === '' || comentario.length < 5) {
+        Swal.fire({
+            title: 'Datos incompletos',
+            text: 'Completa todos los campos correctamente.',
+            icon: 'error',
+            confirmButtonColor: '#38bdf8'
+        });
+        return;
+    }
+
+    const nuevoComentario = document.createElement('div');
+
+    nuevoComentario.textContent = autor + ' - ' + proyecto + ': ' + comentario;
+    nuevoComentario.classList.add('comment-card');
+
+    const contenedor = document.getElementById('comentariosContainer');
+    contenedor.appendChild(nuevoComentario);
+
+    document.getElementById('sinComentarios').style.display = 'none';
+
+    Swal.fire({
+        title: '¡Proyecto Enviado!',
+        text: 'Tu valoracion fue publicada.',
+        icon: 'success',
+        confirmButtonColor: '#38bdf8'
+    });
+
+    confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+    });
+
+    formFeedback.reset();
 });
