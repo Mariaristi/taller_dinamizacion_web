@@ -1,3 +1,4 @@
+
 /* Estilos para la clase liked (botón presionado) */
 .btn-like.liked {
     background-color: #fed7d7 !important;
@@ -14,9 +15,10 @@
     transition: all 0.3s ease;
 }
 
+/* Estilos para Modo Oscuro */
 body.dark-mode {
-  background-color: #1a202c;
-  color: #edf2f7;
+    background-color: #1a1a2e;
+    color: #f0f0f0;
 }
 
 body.dark-mode .header {
@@ -34,11 +36,6 @@ body.dark-mode section.section {
     margin-bottom: 20px;
 }
 
-body.dark-mode .btn-primary {
-    background-color: #3182ce;
-    color: white;
-}
-
 body.dark-mode h1, 
 body.dark-mode h2, 
 body.dark-mode h3 {
@@ -52,6 +49,11 @@ body.dark-mode p {
 body.dark-mode .card {
     background-color: #2a2a4e;
     border: 1px solid #3a3a5e;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #e94560;
+    color: white;
 }
 
 body.dark-mode .btn-secondary {
