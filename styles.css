@@ -93,11 +93,6 @@ body {
   padding: 20px;
 }
 
-body.dark-mode {
-  background-color: #1a202c;
-  color: #edf2f7;
-}
-
 .header-container {
   max-width: 1000px;
   margin: 0 auto 30px auto;
@@ -244,4 +239,56 @@ body.dark-mode .comment-card {
   margin-top: 50px;
   color: #718096;
   font-size: 14px;
+}
+
+.btn-like::before {
+  content: "♡ ";
+  font-size: 16px;
+}
+
+.btn-like.liked::before {
+  content: "♥ ";
+  color: #e53e3e;
+}
+
+.card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comment-card {
+  animation: fadeIn 0.4s ease;
 }
